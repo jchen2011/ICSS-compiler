@@ -28,6 +28,11 @@ public class Evaluator implements Transform {
         validateNodes(ast.root);
     }
 
+    /**
+     * Recursively validates all children of a node.
+     *
+     * @param node The current AST node to validate.
+     */
     protected void validateNodes(ASTNode node) {
         for (ASTNode child : node.getChildren()) {
             handleScopeEntry(child);
@@ -39,12 +44,24 @@ public class Evaluator implements Transform {
         }
     }
 
+    /**
+     * Applies all transforms to the given node.
+     *
+     * @param node   The current AST node.
+     * @param parent The parent of the current AST node.
+     */
     private void validateNode(ASTNode node, ASTNode parent) {
         for (ASTNodeTransform transform : transforms) {
             transform.transformNode(node, parent);
         }
     }
 
+    /**
+     * Handles symbol table changes when entering a new scope,
+     * such as a Stylerule or a new variable assignment.
+     *
+     * @param node The node being entered.
+     */
     private void handleScopeEntry(ASTNode node) {
         if (node instanceof Stylerule) {
             table.newScope();
@@ -53,12 +70,23 @@ public class Evaluator implements Transform {
         }
     }
 
+    /**
+     * Handles cleanup of the symbol table when leaving a scope.
+     *
+     * @param node The node being exited.
+     */
     private void handleScopeExit(ASTNode node) {
         if (node instanceof Stylerule) {
             table.removeScope();
         }
     }
 
+    /**
+     * Evaluates an expression to its resulting literal.
+     *
+     * @param expression The expression to evaluate.
+     * @return The evaluated literal result.
+     */
     public Literal evaluateExpression(Expression expression) {
         if (expression instanceof Operation operation) {
             return evaluateOperation(operation);

@@ -11,6 +11,13 @@ public class DeclarationNodeTransform extends ASTNodeTransform {
         super(evaluator);
     }
 
+    /**
+     * Transforms a declaration by evaluating its expression and replacing it with a literal.
+     * This simplifies the AST by storing only the final computed value.
+     *
+     * @param node   The expression node to evaluate.
+     * @param parent The parent node, which must be a declaration.
+     */
     @Override
     public void transformNode(ASTNode node, ASTNode parent) {
         if (node instanceof Expression expression && parent instanceof Declaration) {

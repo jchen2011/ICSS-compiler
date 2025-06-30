@@ -6,6 +6,14 @@ public class Generator {
 
 	private static final String INDENT = "  ";
 
+	/**
+	 * Converts the given Abstract Syntax Tree (AST) into a CSS string.
+	 *
+	 * Only Stylerule nodes are processed; other node types are ignored.
+	 *
+	 * @param ast The AST representing the ICSS input.
+	 * @return A string containing the generated CSS code.
+	 */
 	public String generate(AST ast) {
 		StringBuilder cssBuilder = new StringBuilder();
 
@@ -18,7 +26,14 @@ public class Generator {
 		return cssBuilder.toString();
 	}
 
-
+	/**
+	 * Appends a single stylerule block to the CSS output.
+	 *
+	 * Includes all valid declarations within the rule.
+	 *
+	 * @param sb The StringBuilder used to construct the CSS output.
+	 * @param stylerule The stylerule to convert into CSS.
+	 */
 	private void appendStylerule(StringBuilder sb, Stylerule stylerule) {
 		String selectorLine = generateSelectorLine(stylerule);
 		sb.append(selectorLine).append(" {\n");
@@ -32,6 +47,12 @@ public class Generator {
 		sb.append("}\n");
 	}
 
+	/**
+	 * Builds a comma-separated string of selectors for a stylerule.
+	 *
+	 * @param stylerule The stylerule whose selectors are being converted.
+	 * @return A single string representing the selector line in CSS.
+	 */
 	private String generateSelectorLine(Stylerule stylerule) {
 		return String.join(", ",
 				stylerule.selectors.stream()
@@ -40,6 +61,14 @@ public class Generator {
 		);
 	}
 
+	/**
+	 * Appends a CSS declaration (property and value) to the CSS output.
+	 *
+	 * Skips the declaration if the property or expression is null.
+	 *
+	 * @param sb The StringBuilder used to construct the CSS output.
+	 * @param declaration The declaration to convert into a CSS line.
+	 */
 	private void appendDeclaration(StringBuilder sb, Declaration declaration) {
 		if (declaration.property != null && declaration.expression != null) {
 			sb.append(INDENT)
