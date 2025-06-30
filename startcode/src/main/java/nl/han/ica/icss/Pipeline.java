@@ -111,7 +111,6 @@ public class Pipeline implements ANTLRErrorListener {
 
         (new Evaluator()).apply(ast);
 
-
         transformed = errors.isEmpty();
     }
     public String generate() {

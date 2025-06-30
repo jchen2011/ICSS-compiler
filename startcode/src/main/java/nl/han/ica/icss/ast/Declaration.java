@@ -13,10 +13,12 @@ public class Declaration extends ASTNode {
 	public Declaration() {
 		super();
 	}
+
 	public Declaration(String property) {
 		super();
 		this.property = new PropertyName(property);
 	}
+
 	@Override
 	public String getNodeLabel() {
 	    return "Declaration";
@@ -24,13 +26,27 @@ public class Declaration extends ASTNode {
 
 	@Override
 	public ArrayList<ASTNode> getChildren() {
-
 		ArrayList<ASTNode> children = new ArrayList<>();
 		if(property != null)
 		    children.add(property);
 		if(expression != null)
 		    children.add(expression);
 		return children;
+	}
+
+	@Override
+	public ASTNode removeChild(ASTNode child) {
+		ASTNode currentValue = null;
+
+		if (child.equals(expression)) {
+			currentValue = expression;
+			expression = null;
+		} else if (child.equals(property)) {
+			currentValue = property;
+			property = null;
+		}
+
+		return currentValue;
 	}
 	@Override
 	public ASTNode addChild(ASTNode child) {
@@ -51,6 +67,7 @@ public class Declaration extends ASTNode {
 		return Objects.equals(property, that.property) &&
 				Objects.equals(expression, that.expression);
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(property, expression);

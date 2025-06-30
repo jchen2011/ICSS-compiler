@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class IfClause extends ASTNode {
-
-
     public Expression conditionalExpression;
     public ArrayList<ASTNode> body = new ArrayList<>();
     public ElseClause elseClause;
@@ -49,6 +47,12 @@ public class IfClause extends ASTNode {
             body.add(child);
 
         return this;
+    }
+
+    @Override
+    public ASTNode removeChild(ASTNode child) {
+        this.body.remove(child);
+        return super.removeChild(child);
     }
     @Override
     public boolean equals(Object o) {

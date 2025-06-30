@@ -1,10 +1,11 @@
 package nl.han.ica.icss.ast.literals;
 
 import nl.han.ica.icss.ast.Literal;
+import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.Objects;
 
-public class PercentageLiteral extends Literal {
+public class PercentageLiteral extends NumberLiteral {
     public int value;
 
     public PercentageLiteral(int value) {
@@ -30,5 +31,20 @@ public class PercentageLiteral extends Literal {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public ExpressionType getType() {
+        return ExpressionType.PERCENTAGE;
+    }
+
+    @Override
+    public int getNumber() {
+        return this.value;
+    }
+
+    @Override
+    public String toString() {
+        return value + "%";
     }
 }

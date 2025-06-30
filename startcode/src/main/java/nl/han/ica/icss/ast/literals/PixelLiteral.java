@@ -1,10 +1,11 @@
 package nl.han.ica.icss.ast.literals;
 
 import nl.han.ica.icss.ast.Literal;
+import nl.han.ica.icss.ast.types.ExpressionType;
 
 import java.util.Objects;
 
-public class PixelLiteral extends Literal {
+public class PixelLiteral extends NumberLiteral {
     public int value;
 
     public PixelLiteral(int value) {
@@ -30,5 +31,20 @@ public class PixelLiteral extends Literal {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public ExpressionType getType() {
+        return ExpressionType.PIXEL;
+    }
+
+    @Override
+    public int getNumber() {
+        return this.value;
+    }
+
+    @Override
+    public String toString() {
+        return value + "px";
     }
 }

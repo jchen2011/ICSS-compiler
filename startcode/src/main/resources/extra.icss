@@ -1,0 +1,65 @@
+// --- ArithmeticOperationCheck errors ---
+a {
+  width: #ff0000 + 10px;       // ERROR: Color in arithmetic
+  height: TRUE + 10px;         // ERROR: Boolean in arithmetic
+  width: 10px + 50%;           // ERROR: Mismatched types
+  height: 10px * 20px;         // ERROR: Multiply without scalar
+  width: 10px * 10px;          // ERROR: Multiply needs scalar
+}
+
+// --- BooleanExpressionCheck errors ---
+b {
+  if [10px] {                  // ERROR: Non-boolean if condition
+    width: 10px;
+  }
+
+  if [10px && TRUE] {          // ERROR: One side not boolean
+    height: 20px;
+  }
+
+  if [10px < TRUE] {           // ERROR: Incomparable types
+    width: 10px;
+  }
+
+  if [#ff0000 < #ffffff] {     // ERROR: Colors not comparable
+    height: 10px;
+  }
+}
+
+// --- DeclarationTypeCheck errors ---
+c {
+  color: 10px;                 // ERROR: Color must be hex
+  background-color: 42%;      // ERROR: Background must be hex
+  width: #ff0000;              // ERROR: Width must be px or %
+}
+
+// --- IfConditionTypeCheck error ---
+d {
+  if [10px] {                  // ERROR: Not boolean
+    width: 10px;
+  }
+}
+
+// --- VariableAssignmentCheck error ---
+VALUE := 10px;
+
+e {
+  VALUE := TRUE;               // ERROR: Variable type mismatch
+}
+
+// --- VariableReferenceCheck error ---
+f {
+  width: UNDEFINEDVAR;         // ERROR: Undefined variable
+}
+
+GOOD := 10px;
+
+g {
+  height: BAD;                 // ERROR: BAD not defined
+}
+
+h {
+  if [COND] {                  // ERROR: COND not defined
+    width: 10px;
+  }
+}
